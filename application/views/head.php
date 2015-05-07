@@ -19,7 +19,7 @@
 		 <div class="container-fluid">
 		 	 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			    <ul class="nav navbar-nav">
-			    	 <li class="dropdown">
+			    	<li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Voice File <span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
 			            <li><?php echo anchor('voice/create', 'Add New', null); ?></li>
@@ -29,7 +29,18 @@
 			            
 			          </ul>
 			        </li>
-			        <li><a href="#">Call Groups</a></li>
+
+			        <li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Phone Groups <span class="caret"></span></a>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><?php echo anchor('group/create', 'Add New', null); ?></li>
+			            
+			            <li class="divider"></li>
+			            <li><?php echo anchor('group/', 'View All', null); ?></li>
+			            
+			          </ul>
+			        </li>
+			      
 			        <li><a href="#">Phone Numbers</a></li>
 			        <li><a href="#">Make Call</a></li>
 			    </ul>

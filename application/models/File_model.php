@@ -17,6 +17,7 @@ class File_model extends CI_Model {
 
 	public function getFile()
 	{
+		$this->db->order_by('id', 'desc');
 		return $this->db->get('voice_file');
 	}
 

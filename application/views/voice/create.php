@@ -14,7 +14,7 @@
 		  </div>
 
 		  <div class="form-group">
-		    <label for="description">Select a voice file</label>
+		    <label for="description">Voice file Description</label>
 		    <textarea class="form-control" rows="5" name="description" id="description"></textarea>
 		    <p class="help-block">Description of this selected file</p>
 		  </div>
