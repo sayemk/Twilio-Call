@@ -9,7 +9,7 @@
 			
 		  <div class="form-group">
 		    <label for="userfile">Select a voice file</label>
-		    <input class="class="form-control" name="userfile" type="file" id="userfile">
+		    <input class="form-control" name="userfile" type="file" id="userfile">
 		    <p class="help-block"> Select a mp3 file to send with call</p>
 		  </div>
 
