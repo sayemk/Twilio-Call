@@ -103,6 +103,7 @@ crashlytics-build.properties
 ### Composer ###
 composer.phar
 vendor/
+uploads/
 
 ### Bower ###
 bower_components
