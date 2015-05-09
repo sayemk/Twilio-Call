@@ -15,7 +15,6 @@ class Group_model extends CI_Model {
 
 	public function get()
 	{
-		$this->db->order_by('id', 'desc');
 		return $this->db->get('groups');
 	}
 
