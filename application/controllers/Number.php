@@ -43,12 +43,74 @@ class Number extends CI_Controller {
 		//Get the phone numbers
 		$data['numbers']=$this->nm->get($group,$start,$config['per_page']);
 		
-		//Get all groups fr filtering
+		//Get all groups for filtering
 		$data['groups']=$this->gm->get();
 		$data['selected_group']=$group;
 
 		$this->load->view('head');
 		$this->load->view('number/show',$data);
+	}
+
+	public function create()
+	{
+		//Get all groups for selecting
+		$data['groups']=$this->gm->get();
+
+		$this->load->view('head');
+		$this->load->view('number/create', $data);
+	}
+
+	public function save()
+	{
+		$this->load->library('form_validation');
+
+		$config = array(
+	        array(
+	                'field' => 'group',
+	                'label' => 'Group',
+	                'rules' => 'required|is_numeric'
+	        ),
+	        array(
+	                'field' => 'name',
+	                'label' => 'Contact Name',
+	                'rules' => 'required',
+	                'errors' => array(
+	                        'required' => 'You must provide a %s.',
+	                ),
+	        ),
+	        array(
+	                'field' => 'phone',
+	                'label' => 'Phone Number',
+	                'rules' => 'required'
+	        ),
+	        array(
+	                'field' => 'email',
+	                'label' => 'Email',
+	                'rules' => 'valid_email'
+	        )
+		);
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run() == FALSE)
+        {
+            //Get all groups for selecting
+			$data['groups']=$this->gm->get();
+
+			$this->load->view('head');
+			$this->load->view('number/create', $data);
+        }
+        else
+        {
+            $group=$this->input->post('group');
+            $phoneData['name']=$this->input->post('name');
+            $phoneData['phone']=$this->input->post('phone');
+            $phoneData['email']=$this->input->post('email');
+            $this->nm->save($group,$phoneData);
+
+            $this->load->view('head');
+			$this->load->view('number/success');
+        }
 	}
 
 }

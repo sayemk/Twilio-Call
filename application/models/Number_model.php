@@ -34,6 +34,22 @@ class Number_model extends CI_Model {
 		
 	}
 
+	public function save(&$group,&$data)
+	{
+		try {
+			$this->db->trans_start();
+			$this->db->insert('phone_number', $data);
+			$insert_id=$this->db->insert_id();
+			$this->db->insert('phone_group', array('number_id'=>$insert_id,
+												'group_id'=>$group));
+			$this->db->trans_complete();
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+		
+	}
+
 }
 
 /* End of file Number_model.php */
