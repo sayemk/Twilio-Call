@@ -81,7 +81,7 @@ class Number extends CI_Controller {
 	        array(
 	                'field' => 'phone',
 	                'label' => 'Phone Number',
-	                'rules' => 'required'
+	                'rules' => 'required|unique'
 	        ),
 	        array(
 	                'field' => 'email',
@@ -111,6 +111,49 @@ class Number extends CI_Controller {
             $this->load->view('head');
 			$this->load->view('number/success');
         }
+	}
+
+	public function create_mass	()
+	{
+		//Get all groups for selecting
+		$data['groups']=$this->gm->get();
+
+		$this->load->view('head');
+		$this->load->view('number/mass_upload', $data);
+	}
+
+	//file uploader
+
+	public function upload()
+	{
+		$config['upload_path'] = './uploads/contact/';
+		$config['allowed_types'] = 'xls|csv';
+		$config['max_size']             =5120;
+        $config['overwrite']			=False;
+        $config['file_name']			=time().'_'.$_FILES["userfile"]['name'];
+		
+		$this->load->library('upload', $config);
+		
+		if ( ! $this->upload->do_upload()){
+
+			$data['errors'] = array('error' => $this->upload->display_errors());
+			$data['groups']=$this->gm->get();
+
+			$this->load->view('head');
+			$this->load->view('number/mass_upload', $data);
+		}
+		else{
+			
+			$file_data =$this->upload->data();
+			//Load the excel reader library
+			$this->load->library('excel_reader');
+
+			$this->excel_reader->read($file_data['full_path']);
+
+			$worksheet = $this->excel_reader->sheets[0];
+			echo "<pre>";
+			print_r($worksheet);
+		}
 	}
 
 }

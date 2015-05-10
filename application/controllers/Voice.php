@@ -71,7 +71,7 @@ class Voice extends CI_Controller
 	{
 		$config['upload_path']          = './uploads/voice/';
         $config['allowed_types']        = 'mp3|png';
-        $config['max_size']             = 2048;
+        $config['max_size']             = 5120;
         $config['overwrite']			=False;
         $config['file_name']			=time().'_'.$_FILES["userfile"]['name'];
         
