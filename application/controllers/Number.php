@@ -142,7 +142,7 @@ class Number extends CI_Controller {
 			$this->load->view('head');
 			$this->load->view('number/mass_upload', $data);
 		}
-		else{
+		else{  
 			
 			$file_data =$this->upload->data();
 			//Load the excel reader library
