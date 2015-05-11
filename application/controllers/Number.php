@@ -274,6 +274,19 @@ class Number extends CI_Controller {
 		
 	}
 
+	public function delete($id)
+	{
+		if ($this->nm->delete($id)) {
+			$data['message']=TRUE;
+		}else {
+			$data['message']=false;
+		}
+
+		$this->load->view('head');
+
+		$this->load->view('number/delete', $data);
+	}
+
 }
 
 /* End of file Number.php */

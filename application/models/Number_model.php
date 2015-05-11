@@ -81,6 +81,25 @@ class Number_model extends CI_Model {
 
 	}
 
+	public function delete($id)
+	{
+		try {
+			$this->db->trans_start();
+			$this->db->where('id', $id);
+			$this->db->delete('phone_number');
+
+
+			$this->db->where('number_id', $id);
+			$this->db->delete('phone_group');
+
+			$this->db->trans_complete();
+
+			return true;
+			
+		} catch (Exception $e) {
+			return false;	
+		}
+	}
 }
 
 /* End of file Number_model.php */

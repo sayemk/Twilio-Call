@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Twilio_call extends CI_Controller {
+class Calls extends CI_Controller {
 
 	
 	public function __construct()
@@ -13,7 +13,7 @@ class Twilio_call extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('head');
-		$this->load->view('call_file');	
+		$this->load->view('calls/index');	
 	}
 
 	public function makeCall()
