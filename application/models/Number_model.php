@@ -67,6 +67,20 @@ class Number_model extends CI_Model {
 		
 	}
 
+	public function update(&$groupData,&$pg_id,&$phone_id,&$phoneData)
+	{
+		$this->db->trans_start();
+		$this->db->where('id', $phone_id);
+		$this->db->update('phone_number', $phoneData);
+
+
+		$this->db->where('id', $pg_id);
+		$this->db->update('phone_group', $groupData);
+
+		$this->db->trans_complete();
+
+	}
+
 }
 
 /* End of file Number_model.php */

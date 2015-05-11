@@ -252,14 +252,19 @@ class Number extends CI_Controller {
         }
         else
         {
-            $group=$this->input->post('group');
+           
+            $groupData['group_id']=$this->input->post('group');
+            $groupData['number_id']=$this->session->userdata('phone_id');
+
             $pg_id=$this->input->post('pg_id');
+
             $phone_id=$this->session->userdata('phone_id');
+
             $phoneData['name']=$this->input->post('name');
             $phoneData['phone']=$this->input->post('phone');
             $phoneData['email']=$this->input->post('email');
             
-           // $this->nm->update($group,$pg_id,$phone_id,$phoneData);
+            $this->nm->update($groupData,$pg_id,$phone_id,$phoneData);
 
             redirect('number/edit/'.$phone_id);
 

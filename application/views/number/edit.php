@@ -46,7 +46,7 @@
 		    <div class="col-sm-10">
 		      <input type="hidden" name="phone_id" value="<?php echo $num->id ?>">
 		      <input type="hidden" name="pg_id" value="<?php echo $num->pg_id ?>">
-		      <button type="submit" class="btn btn-primary">Create</button>
+		      <button type="submit" class="btn btn-primary">Update</button>
 		    </div>
 		  </div>
 		  <?php
