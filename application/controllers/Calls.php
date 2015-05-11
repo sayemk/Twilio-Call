@@ -8,23 +8,41 @@ class Calls extends CI_Controller {
     {
             parent::__construct();
             $this->load->helper(array('form', 'url'));
+
+            $this->load->model('group_model','gm');
+            $this->load->model('file_model','fm');
+            $this->load->model('Calls_model','cm');
     }
 
 	public function index()
 	{
+
+		$data['groups'] = $this->gm->get();
+
+		$data['files'] = $this->fm->getFile();
+
 		$this->load->view('head');
-		$this->load->view('calls/index');	
+		$this->load->view('calls/index',$data);	
 	}
 
 	public function makeCall()
 	{
-		$this->config->load('twilio');
-		$this->load->model('Twilio_call_model');
+		
+		
+		$file = $this->input->post('file');
+		$group = $this->input->post('group');
 
+
+
+		print_r($this->generateVoiceFile($file, $group));
+
+		exit();
+
+		$this->config->load('twilio');
+		
 		
 		$phone=$this->Twilio_call_model->getNumbers();
 
-		echo "<pre>";
 		foreach ($phone->result() as $row) {
 			
 			$twilo=new Services_Twilio($this->config->item('A_SID'),$this->config->item('A_TOKEN'));
@@ -39,6 +57,29 @@ class Calls extends CI_Controller {
 			
 			$this->Twilio_call_model->saveCall($calls);
 		}
+	}
+
+	/*
+	*Input: voice file id
+	*output: twilio xml file link
+	*/
+	private function generateVoiceFile(&$file_id, &$group_id)
+	{
+		$file = $this->fm->find($file_id)->name;
+		$group = $this->gm->find($group_id)->name;
+		$url=base_url().'uploads/voice/'.$file;
+		$response = new Services_Twilio_Twiml();
+		$response->say('Hello');
+		$response->play($url, array("loop" => 0));
+		
+		//generated file
+		$twiML = 'uploads/xml/'.$group.'_'.time().'.xml';
+
+		$xml=fopen($twiML, 'w');
+		fwrite($xml, $response);
+		fclose($xml);
+
+		return base_url().$twiML;
 	}
 
 }

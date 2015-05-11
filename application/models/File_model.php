@@ -21,6 +21,14 @@ class File_model extends CI_Model {
 		return $this->db->get('voice_file');
 	}
 
+	public function find($id)
+	{
+		$this->db->where('id', $id);
+		foreach ($this->db->get('voice_file')->result() as $row) {
+			return $row;
+		}
+	}
+
 	public function editFile($id)
 	{
 		$this->db->where('id', $id);

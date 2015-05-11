@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Twilio_call_model extends CI_Model {
+class Calls_model extends CI_Model {
 
 	/*
 	*Get the phone numbers

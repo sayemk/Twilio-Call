@@ -53,7 +53,17 @@
 			          </ul>
 			        </li>
 			       
-			        <li><a href="#">Make Call</a></li>
+			        <li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Contacts <span class="caret"></span></a>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><?php echo anchor('calls/single', 'Single Call', null); ?></li>
+			            <li><?php echo anchor('calls/index', 'Group Call', null); ?></li>
+			            
+			            <!--li class="divider"></li>
+			            <li><?php echo anchor('calls/', 'View All', null); ?></li-->
+			            
+			          </ul>
+			        </li>
 			    </ul>
 			 </div>
 		 </div>  
