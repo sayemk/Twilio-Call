@@ -151,9 +151,122 @@ class Number extends CI_Controller {
 			$this->excel_reader->read($file_data['full_path']);
 
 			$worksheet = $this->excel_reader->sheets[0];
-			echo "<pre>";
-			print_r($worksheet);
+			//Remove the column name of the file
+			array_shift($worksheet['cells']);
+			//Get the group from input
+			$group=$this->input->post('group');
+
+			foreach ($worksheet['cells'] as $row) {
+				//Reindex the row array	
+				$row =array_values($row);
+				$data['name']=$row[0];
+				$data['email']=$row[1];
+				$data['phone']=$row[2];
+
+				if(!$this->nm->save($group,$data))
+				{
+					$errorNumber[]=$data['phone'];
+				}
+
+			}
+
+			$viewData['error']=&$errorNumber;
+
+			$this->load->view('head');
+			$this->load->view('number/info',$viewData);
+
+
 		}
+	}
+
+
+	public function edit($id)
+	{
+		$data['number']=$this->nm->find($id);
+		$data['groups']=$this->gm->get();
+		//Set for redirect
+		$this->session->set_userdata('phone_id', $id);
+		$this->load->view('head');
+		$this->load->view('number/edit', $data);
+
+		
+
+	}
+
+	public function update()
+	{
+		$config = array(
+	        array(
+	                'field' => 'group',
+	                'label' => 'Group',
+	                'rules' => 'required|is_numeric'
+	        ),
+	        array(
+	                'field' => 'name',
+	                'label' => 'Contact Name',
+	                'rules' => 'required',
+	                'errors' => array(
+	                        'required' => 'You must provide a %s.',
+	                ),
+	        ),
+	        array(
+	                'field' => 'phone',
+	                'label' => 'Phone Number',
+	                'rules' => 'required'
+	        ),
+	        array(
+	                'field' => 'email',
+	                'label' => 'Email',
+	                'rules' => 'valid_email'
+	        ),
+	        array(
+	                'field' => 'phone_id',
+	                'label' => 'phone_id',
+	                'rules' => 'required|numeric',
+	                'errors'=> array(
+	                	'required'=>'Don\'t customize Hidden field %s',
+	                	'numeric'=>'Don\'t customize numaric field %s',
+	                ),
+	        ),
+	        array(
+	                'field' => 'pg_id',
+	                'label' => 'pg_id',
+	                'rules' => 'required|numeric',
+	                'errors'=> array(
+	                	'required'=>' Field %s is requird',
+	                	'numeric'=>'Don\'t customize numaric field %s',
+	                ),
+	        )
+		);
+		
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run() == FALSE)
+        {
+            $data['number']=$this->nm->find($this->session->userdata('phone_id'));
+			$data['groups']=$this->gm->get();
+			$this->load->view('head');
+			$this->load->view('number/edit', $data);
+        }
+        else
+        {
+            $group=$this->input->post('group');
+            $pg_id=$this->input->post('pg_id');
+            $phone_id=$this->session->userdata('phone_id');
+            $phoneData['name']=$this->input->post('name');
+            $phoneData['phone']=$this->input->post('phone');
+            $phoneData['email']=$this->input->post('email');
+            
+           // $this->nm->update($group,$pg_id,$phone_id,$phoneData);
+
+            redirect('number/edit/'.$phone_id);
+
+            
+        }
+
+		
 	}
 
 }

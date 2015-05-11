@@ -26,22 +26,25 @@
  		<th>Name</th>
 	 	<th>Phone Number</th>
 	 	<th>Email</th>
+	 	<th>Group</th>
 	 	<th>Action</th>
  	</tr>
  </thead>
  <tbody>
  	<?php 
  		foreach ($numbers->result() as  $number) {
+
  			?>
  			<tr>
  				<td><?php echo $number->id ?></td>
  				<td><?php echo $number->name ?></td>
  				<td><?php echo $number->phone ?></td>
  				<td><?php echo $number->email ?></td>
+ 				<td><?php echo $number->group_name; ?></td>
  				<td>
- 					<?php echo anchor('voice/edit/'.$number->id, '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'); ?>
+ 					<?php echo anchor('number/edit/'.$number->id, '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'); ?>
  					&nbsp;
- 					<?php echo anchor('voice/delete/'.$number->id, '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>'); ?>
+ 					<?php echo anchor('number/delete/'.$number->id, '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>'); ?>
  				</td>
  				
  			</tr>

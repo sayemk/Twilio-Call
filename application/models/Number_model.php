@@ -22,16 +22,33 @@ class Number_model extends CI_Model {
 	{
 		
 		if (!is_null($group)) {
-			$this->db->select('phone_number.*');
-			$this->db->from('phone_number');
+			$this->db->select('phone_number.*, phone_group.group_id, groups.name AS group_name');
+			$this->db->from('phone_group');
 			$this->db->where('phone_group.group_id', $group);
-			$this->db->join('phone_group', 'phone_group.id = phone_number.id','right');
+			$this->db->join('phone_number', 'phone_number.id = phone_group.number_id','left');
+			$this->db->join('groups', 'groups.id = phone_group.group_id', 'right');
 			$this->db->limit($limit, $start); 
 			return $this->db->get();
 		} else {
-			return $this->db->get('phone_number', $limit, $start);
+			$this->db->select('phone_number.*, phone_group.group_id, groups.name AS group_name');
+			$this->db->from('phone_group');
+			//$this->db->where('phone_group.group_id', $group);
+			$this->db->join('phone_number', 'phone_number.id = phone_group.number_id','left');
+			$this->db->join('groups', 'groups.id = phone_group.group_id', 'right');
+			$this->db->limit($limit, $start); 
+			return $this->db->get();
 		}
 		
+	}
+
+	public function find($id)
+	{
+			$this->db->select('phone_number.*,phone_group.group_id, phone_group.id AS pg_id');
+			$this->db->from('phone_group');
+			$this->db->where('number_id', $id);
+			$this->db->join('phone_number', 'phone_number.id = phone_group.number_id', 'left');
+			$this->db->join('groups', 'groups.id = phone_group.group_id', 'left');
+			return $this->db->get();
 	}
 
 	public function save(&$group,&$data)

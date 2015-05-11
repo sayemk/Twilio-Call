@@ -1,6 +1,6 @@
 
 
-	  	<h1>Create A New Contacts</h1>
+	  	<h1>Create A New Contact</h1>
 	  	<div class="col-md-6">
 			<?php 
 				echo validation_errors();
