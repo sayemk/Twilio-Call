@@ -20,11 +20,11 @@ Change the config in **application/config/twilio.php** with your own credentials
 1. Create a group from front end.
 2. Create contact or upload with from a excel file. Only **.xls** file is readable and cells headings are ***name, email, phone*** i.e. 
 
-Name	      Email	        Phone
+Name	      |Email	        |Phone
 		
-Abu Sayem	  sa@gmail.com	8801718888888
+Abu Sayem     |sa@gmail.com	|8801718888888
 
-Shahnaj	    sh@gmail.com	8801751455555
+Shahnaj	      |sh@gmail.com	|8801751455555
 
 3. Then make call
 
