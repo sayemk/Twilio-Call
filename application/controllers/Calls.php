@@ -12,6 +12,8 @@ class Calls extends CI_Controller {
             $this->load->model('group_model','gm');
             $this->load->model('file_model','fm');
             $this->load->model('Calls_model','cm');
+
+            $this->load->model('number_model', 'nm');
     }
 
 	public function index()
@@ -33,30 +35,38 @@ class Calls extends CI_Controller {
 		$group = $this->input->post('group');
 
 
+		//Get the voice file url for call
+		$voiceXML = $this->generateVoiceFile($file, $group);
 
-		print_r($this->generateVoiceFile($file, $group));
-
-		exit();
-
+		//Load the twilio config file
 		$this->config->load('twilio');
-		
-		
-		$phone=$this->Twilio_call_model->getNumbers();
+		//Create API Connection
+		$twilo=new Services_Twilio($this->config->item('A_SID'),$this->config->item('A_TOKEN'));
 
-		foreach ($phone->result() as $row) {
-			
-			$twilo=new Services_Twilio($this->config->item('A_SID'),$this->config->item('A_TOKEN'));
-		
-			$call = $twilo->account->calls->create(
-				$this->config->item('TWILIO_NUMBER'), //Twilio number
-				$row->phone, //To a number
-				"http://demo.twilio.com/docs/voice.xml", 
-				array());
+		$totalNumbers = $this->nm->count($group);
 
-			$calls=array('phone'=>$row->phone, 'SID'=>$call->sid, 'status'=>$call->status);
+		for ($i=0; $i < $totalNumbers; $i +=20) { 
 			
-			$this->Twilio_call_model->saveCall($calls);
+			foreach ($this->nm->get($group,$i)->result() as $number) {
+
+				//Make call
+				$call = $twilo->account->calls->create(
+					$this->config->item('TWILIO_NUMBER'), //Twilio number
+					$number->phone, //To a number
+					$voiceXML, 
+					array()
+				);
+
+				$calls=array('phone'=>$number->phone, 'SID'=>$call->sid, 'status'=>$call->status);
+				
+				//$this->Twilio_call_model->saveCall($calls);
+				echo "<pre>";
+				print_r($calls);
+
+			}
+
 		}
+	
 	}
 
 	/*
