@@ -59,7 +59,7 @@ class Calls extends CI_Controller {
 
 				$calls=array('phone'=>$number->phone, 'SID'=>$call->sid, 'status'=>$call->status);
 				
-				//$this->Twilio_call_model->saveCall($calls);
+				$this->cm->saveCall($calls);
 				echo "<pre>";
 				print_r($calls);
 

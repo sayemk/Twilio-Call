@@ -7,6 +7,6 @@ class Calls_model extends CI_Model {
 	//Save call status
 	public function saveCall(&$calls=array())
 	{
-		$this->db->insert('colgtshirt_call', $calls);
+		$this->db->insert('calls', $calls);
 	}
 }
