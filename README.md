@@ -7,7 +7,7 @@ and run **composer install or update**
 
 
 ##Database setup
-1. Run the sql script in your database server
+1. Run the sql script **colgtshirtfoundation.sql** in your database server
 2. Set your database preferences in **application/config/database.php**. Make sure you set database prefix **colgtshirt**.
 ##Twilio setup
 Change the config in **application/config/twilio.php** with your own credentials.
