@@ -2,7 +2,7 @@
 Twilio Call management with user groups and voice file
 
 #Installation 
-do git clone or download twilio-call.
+do git clone https://github.com/sayemk/Twilio-Call.git or download twilio-call.
 and run **composer install or update**
 
 
