@@ -26,7 +26,7 @@ Abu Sayem     |sa@gmail.com	|8801718888888
 
 Shahnaj	      |sh@gmail.com	|8801751455555
 
-3. Then make call
+Then make call from call menu.
 
 
 
